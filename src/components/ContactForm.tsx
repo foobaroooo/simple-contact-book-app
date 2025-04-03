@@ -8,7 +8,7 @@ interface ContactFormProps {
 
 export default function ContactForm({ contact, onSave, onDelete } : ContactFormProps) {
     return (
-        <form className="card w-96 bg-base-100 card-md shadow-sm mt-5">
+        <form className="card w-96 bg-base-100 card-md shadow-sm">
         <div className="card-body">
           <div className="m-2">
             <label htmlFor="name">

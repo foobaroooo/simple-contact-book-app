@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 function App() {
 
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [editContact, setEditContact] = useState(false);
+  const [editContactId, setEditContactId] = useState('');
 
   const handleAddContact = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,8 +22,8 @@ function App() {
     setContacts([...contacts, newContact]);
   }
 
-  const handleEditContact = (e) => {
-
+  const handleEditContact = (contactId : string) => {
+    setEditContactId(contactId);
   }
 
   const handleContactFormSave = (e) => {
@@ -58,18 +58,18 @@ function App() {
 
       <section className="flex flex-wrap gap-4">
         {contacts.map((contact) => (
-          !editContact ? (
-            <ContactCard 
-              key={ contact.id } 
-              contact={ contact } 
-              onEdit={ handleEditContact } />
-          ) : (
+          editContactId && editContactId === contact.id? (
             <ContactForm 
               key={ contact.id }
               contact={ contact }
               onSave={ handleContactFormSave }
               onDelete={ handleContactFormDelete }
             />
+          ) : (
+            <ContactCard 
+              key={ contact.id } 
+              contact={ contact } 
+              onEdit={ () => handleEditContact(contact.id) } />
           )
         ))}
       </section>
