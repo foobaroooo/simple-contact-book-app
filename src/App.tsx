@@ -2,6 +2,7 @@ import './App.css'
 import { useState} from 'react';
 import { Contact } from './types';
 import ContactCard from './components/ContactCard'
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const newContact = {
+      id: uuidv4(),
       name: formData.get('name') as string,
       city: formData.get('city') as string,
     };
