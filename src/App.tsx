@@ -1,25 +1,16 @@
 import './App.css'
 import { useState, FormEvent } from 'react';
 import { Contact } from './types';
+import ContactAdd from './components/ContactAdd';
 import ContactCard from './components/ContactCard'
 import ContactForm from './components/ContactForm';
-import { v4 as uuidv4 } from "uuid";
 
 function App() {
 
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [editContactId, setEditContactId] = useState<string | null>(null);
 
-  const handleAddContact = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-    const newContact = {
-      id: uuidv4(),
-      name: formData.get('name') as string,
-      city: formData.get('city') as string,
-    };
-
+  const handleAddNewContact = (newContact: Contact) => {
     setContacts([...contacts, newContact]);
   }
 
@@ -27,7 +18,7 @@ function App() {
     setEditContactId(contactId);
   }
 
-  const handleContactFormSave = (updatedContact : Contact) => {
+  const handleContactSave = (updatedContact : Contact) => {
     const updatedContacts = contacts.map((contact) => {
       return (contact.id === updatedContact.id) ? updatedContact : contact;
     });
@@ -36,12 +27,16 @@ function App() {
     setEditContactId(null);
   }
 
-  const handleContactFormCancel = (e) => {
+  const handleContactCancel = () => {
     setEditContactId(null);
   }
 
-  const handleContactFormDelete = (e) => {
-
+  const handleContactDelete = () => {
+    const updatedContacts = contacts.filter(
+      (contact) => contact.id !== editContactId
+    );
+    setContacts(updatedContacts);
+    setEditContactId(null);
   }
 
   return (
@@ -52,18 +47,7 @@ function App() {
       </header>
             
       <section>
-        <form onSubmit={handleAddContact} className="p-5 gap-2 flex rounded-box mb-5 bg-base-100 ">
-          <label htmlFor="name" className="input">
-            <span className="label">Name</span>
-            <input type="text" id="name" name="name" className="input mr-3 w-50 ml-3" defaultValue="" />
-          </label>
-          <label htmlFor="city" className="input">
-            <span className="label">City</span>
-            <input type="text" id="city" name="city" className="input mr-3 w-50 ml-3" defaultValue="" />
-          </label>
-
-          <button type="submit" id="btnSubmit" className="btn btn-primary">Add contact</button>
-        </form>
+        <ContactAdd onAddNew={ (e) => handleAddNewContact(e) } />
       </section>
 
       <section className="flex flex-wrap gap-4">
@@ -72,9 +56,9 @@ function App() {
             <ContactForm 
               key={ contact.id }
               contact={ contact }
-              onSave={ handleContactFormSave }
-              onCancel={ handleContactFormCancel }
-              onDelete={ handleContactFormDelete }
+              onSave={ handleContactSave }
+              onCancel={ handleContactCancel }
+              onDelete={ handleContactDelete }
             />
           ) : (
             <ContactCard 

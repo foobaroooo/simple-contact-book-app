@@ -3,7 +3,7 @@ import { FormEvent } from 'react';
 
 interface ContactFormProps {
     contact: Contact;
-    onSave: (updatedContact: Contact) => void;
+    onSave: (updatedContact : Contact) => void;
     onCancel: () => void;
     onDelete: () => void;
 }
@@ -43,7 +43,7 @@ export default function ContactForm({ contact, onSave, onCancel, onDelete } : Co
           </div>
 
           <div className="flex justify-between">
-            <button type="button" id="btnDelete" className="btn btn-secondary">Delete</button>
+            <button type="button" id="btnDelete" className="btn btn-secondary" onClick={onDelete}>Delete</button>
             <div className="flex gap-2 ml-auto">
               <button type="button" id="btnCancel" className="btn btn-default" onClick={onCancel}>Cancel</button>
               <button type="submit" id="btnSave" className="btn btn-primary">Save</button>

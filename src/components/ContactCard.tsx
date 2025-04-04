@@ -12,7 +12,7 @@ export default function ContactCard({ contact, onEdit }: ContactCardProps) {
                 <h1 id="cardName" className="card-title font-bold">{ contact.name }</h1>
                 <div id="cardCity">{ contact.city }</div>
                 <div className="flex justify-end mt-10 card-action">
-                    <button type="button" className="btn btn-primary" onClick={onEdit}>Edit</button>
+                    <button type="button" className="btn btn-primary" onClick={ () => onEdit(contact.id) }>Edit</button>
                 </div>
             </div>
         </div>
