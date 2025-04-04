@@ -28,7 +28,11 @@ function App() {
   }
 
   const handleContactFormSave = (updatedContact : Contact) => {
-    setContacts([...contacts, updatedContact])
+    const updatedContacts = contacts.map((contact) => {
+      return (contact.id === updatedContact.id) ? updatedContact : contact;
+    });
+
+    setContacts(updatedContacts)
     setEditContactId(null);
   }
 
@@ -48,7 +52,7 @@ function App() {
       </header>
             
       <section>
-        <form onSubmit={handleAddContact} className="mt-5 p-5 rounded-box mb-5 bg-base-100 ">
+        <form onSubmit={handleAddContact} className="p-5 gap-2 flex rounded-box mb-5 bg-base-100 ">
           <label htmlFor="name" className="input">
             <span className="label">Name</span>
             <input type="text" id="name" name="name" className="input mr-3 w-50 ml-3" defaultValue="" />
