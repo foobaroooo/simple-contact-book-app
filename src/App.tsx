@@ -1,17 +1,18 @@
 import './App.css'
-import { useState} from 'react';
-import ContactForm from './components/ContactForm';
+import { useState, FormEvent } from 'react';
 import { Contact } from './types';
 import ContactCard from './components/ContactCard'
+import ContactForm from './components/ContactForm';
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
 
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [editContactId, setEditContactId] = useState('');
+  const [editContactId, setEditContactId] = useState<string | null>(null);
 
-  const handleAddContact = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddContact = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const formData = new FormData(e.currentTarget);
     const newContact = {
       id: uuidv4(),
@@ -26,8 +27,13 @@ function App() {
     setEditContactId(contactId);
   }
 
-  const handleContactFormSave = (e) => {
+  const handleContactFormSave = (updatedContact : Contact) => {
+    setContacts([...contacts, updatedContact])
+    setEditContactId(null);
+  }
 
+  const handleContactFormCancel = (e) => {
+    setEditContactId(null);
   }
 
   const handleContactFormDelete = (e) => {
@@ -43,12 +49,12 @@ function App() {
             
       <section>
         <form onSubmit={handleAddContact} className="mt-5 p-5 rounded-box mb-5 bg-base-100 ">
-          <label htmlFor="name">
-            Name
+          <label htmlFor="name" className="input">
+            <span className="label">Name</span>
             <input type="text" id="name" name="name" className="input mr-3 w-50 ml-3" defaultValue="" />
           </label>
-          <label htmlFor="city">
-            City
+          <label htmlFor="city" className="input">
+            <span className="label">City</span>
             <input type="text" id="city" name="city" className="input mr-3 w-50 ml-3" defaultValue="" />
           </label>
 
@@ -63,6 +69,7 @@ function App() {
               key={ contact.id }
               contact={ contact }
               onSave={ handleContactFormSave }
+              onCancel={ handleContactFormCancel }
               onDelete={ handleContactFormDelete }
             />
           ) : (
