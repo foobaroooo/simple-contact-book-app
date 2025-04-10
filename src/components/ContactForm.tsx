@@ -22,7 +22,7 @@ export default function ContactForm({ contact, onSave, onCancel, onDelete } : Co
       
           onSave(updatedContact);
 
-          e.target.reset();
+          (e.target as HTMLFormElement).reset();
     }
 
     return (

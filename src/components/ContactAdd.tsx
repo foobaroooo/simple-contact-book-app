@@ -20,7 +20,7 @@ export default function ContactAdd({ onAddNew }: ContactAddProps) {
 
     onAddNew(newContact);
 
-    e.target.reset();
+    (e.target as HTMLFormElement).reset();
   }
 
     return (
