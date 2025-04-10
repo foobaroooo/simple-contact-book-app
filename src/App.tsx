@@ -31,9 +31,9 @@ function App() {
     setEditContactId(null);
   }
 
-  const handleContactDelete = () => {
+  const handleContactDelete = (id : string) => {
     const updatedContacts = contacts.filter(
-      (contact) => contact.id !== editContactId
+      (contact) => contact.id !== id  // editContactId
     );
     setContacts(updatedContacts);
     setEditContactId(null);

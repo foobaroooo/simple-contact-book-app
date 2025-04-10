@@ -5,7 +5,7 @@ interface ContactFormProps {
     contact: Contact;
     onSave: (updatedContact : Contact) => void;
     onCancel: () => void;
-    onDelete: () => void;
+    onDelete: (id: string) => void;
 }
  
 
@@ -43,7 +43,7 @@ export default function ContactForm({ contact, onSave, onCancel, onDelete } : Co
           </div>
 
           <div className="flex justify-between">
-            <button type="button" id="btnDelete" className="btn btn-secondary" onClick={onDelete}>Delete</button>
+            <button type="button" id="btnDelete" className="btn btn-secondary" onClick={() => onDelete( contact.id )}>Delete</button>
             <div className="flex gap-2 ml-auto">
               <button type="button" id="btnCancel" className="btn btn-default" onClick={onCancel}>Cancel</button>
               <button type="submit" id="btnSave" className="btn btn-primary">Save</button>
