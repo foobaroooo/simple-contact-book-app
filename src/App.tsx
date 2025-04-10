@@ -47,7 +47,7 @@ function App() {
       </header>
             
       <section>
-        <ContactAdd onAddNew={ (e) => handleAddNewContact(e) } />
+        <ContactAdd onAddNew={ (newContact) => handleAddNewContact(newContact) } />
       </section>
 
       <section className="flex flex-wrap gap-4">
